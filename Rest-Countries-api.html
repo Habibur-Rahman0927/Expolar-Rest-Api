@@ -56,6 +56,12 @@
         #countryDetails{
             color:maroon;
         }
+        .btn{
+            color: white;
+            font-weight: bold;
+            background-color: maroon;
+            padding: 8px 40px;
+        }
     </style>
 </head>
 
@@ -87,7 +93,7 @@
                 const countyInfo = `
                 <h3 class="country-name">${newData.name}</h3>
                 <p class="country-capital">${newData.capital}</p>
-                <button onclick="displayCountryDetails('${newData.name}')">Details</button>
+                <button class="btn" onclick="displayCountryDetails('${newData.name}')">Details</button>
                 
                 `
                 div.innerHTML = countyInfo;
