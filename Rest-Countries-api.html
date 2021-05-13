@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Tour Rest County Api</title>
+    <style>
+        /* #mylist{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            grid-gap: 30px;
+        } */
+        body{
+            background-color:whitesmoke;
+        }
+        #mylist{
+            display: flex;
+            flex-wrap: wrap;
+            padding: 50px;
+            
+        }
+        .country{
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+            margin: 30px;
+            background-color: white;
+            box-shadow: 5px 5px 31px 10px grey
+        }
+        .country-name{
+            font-size: 45px;
+            color: maroon;
+        }
+        .country-capital{
+            color: rgba(128, 0, 0, 0.753);
+        }
+        #countryDetails{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .widthNow{
+            text-align: center;
+            margin: 10px;
+            background-color:white;
+            padding: 20px;
+            width: 400px;
+            box-shadow: Inset 5px 5px 31px 10px gainsboro;
+        }
+        #countryDetails img{
+            width: 200px;
+        }
+        #countryDetails{
+            color:maroon;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="countryDetails">
+
+    </div>
+    <div id="mylist">
+
+    </div>
+
+
+
+    <script>
+        fetch('https://restcountries.eu/rest/v2/all')
+            .then(res => res.json())
+            .then(data => display(data))
+
+
+
+
+
+        const display = data => {
+            const countrydiv = document.getElementById('mylist');
+            for (let i = 0; i < data.length; i++) {
+                const newData = data[i];
+                const div = document.createElement('div');
+                div.className = 'country';
+                const countyInfo = `
+                <h3 class="country-name">${newData.name}</h3>
+                <p class="country-capital">${newData.capital}</p>
+                <button onclick="displayCountryDetails('${newData.name}')">Details</button>
+                
+                `
+                div.innerHTML = countyInfo;
+
+                
+                countrydiv.appendChild(div);
+            }
+        }
+
+
+        const displayCountryDetails = nameCountry =>{
+            const url= `https://restcountries.eu/rest/v2/name/${nameCountry}`;
+            fetch(url)
+            .then(res => res.json())
+            .then(cunData => renderCountryInfo(cunData[0]))
+        }
+        const renderCountryInfo = country =>{
+            const countryDiv = document.getElementById('countryDetails');
+            countryDiv.innerHTML = `
+            <div class="widthNow">
+            <h1>${country.name}</h1>
+            <p>Population: ${country.population}</p>
+            <p>Domain Name: ${country.topLevelDomain}</p>
+            <p>Region Name: ${country.region}</p>
+            <img src="${country.flag}">
+            </div>
+            `
+        }
+
+    </script>
+
+</body>
+
+</html>
